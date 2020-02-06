@@ -7,6 +7,7 @@ RUN apt-get update && \
     apt-get -y clean
 RUN gem update --system
 RUN gem install bundler smashing
+RUN useradd appuser
 RUN mkdir /smashing && \
     smashing new smashing && \
     cd /smashing && \
@@ -20,7 +21,8 @@ RUN mkdir /smashing && \
     mkdir /smashing/config && \
     mv /smashing/config.ru /smashing/config/config.ru && \
     ln -s /smashing/config/config.ru /smashing/config.ru && \
-    ln -s /smashing/config /config
+    ln -s /smashing/config /config && \
+    chown -R appuser /smashing
 
 COPY run.sh /
 
